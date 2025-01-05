@@ -22,3 +22,33 @@ Example:
   "email": "john@example.com",
   "password": "securepassword123"
 }
+
+
+
+{
+  "message": "Account created successfully.",
+  "success": true
+}
+
+
+{
+  "message": "Something is missing, please check!",
+  "success": false
+}
+{
+  "message": "Try different email",
+  "success": false
+}
+
+curl -X POST http://localhost:8000/api/v1/user/register \
+  -H "Content-Type: application/json" \
+  -d '{
+        "username": "john_doe",
+        "email": "john@example.com",
+        "password": "securepassword123"
+      }'
+
+      {
+  "message": "Account created successfully.",
+  "success": true
+}
