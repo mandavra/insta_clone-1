@@ -47,8 +47,77 @@ curl -X POST http://localhost:8000/api/v1/user/register \
         "email": "john@example.com",
         "password": "securepassword123"
       }'
-
+      
       {
   "message": "Account created successfully.",
+  "success": true
+}
+
+# Post Add Endpoint Documentation
+
+## Endpoint: `/api/v1/posts/addpost`
+
+### Description
+This endpoint is used to add a new post. It requires the user to provide an image and optionally a caption. The image will be optimized and uploaded to a cloud storage.
+
+### Method
+`POST`
+
+### Request Headers
+- `Authorization` (string, required): The JWT token for user authentication.
+
+### Request Body
+The request body should be in `multipart/form-data` format and include the following fields:
+
+- `image` (file, required): The image file to be uploaded.
+- `caption` (string, optional): The caption for the post.
+
+Example:
+```sh
+curl -X POST http://localhost:8000/api/v1/posts/addpost \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -F "image=@/path/to/your/image.jpg" \
+  -F "caption=This is a new post"
+
+
+  {
+  "message": "New post added",
+  "post": {
+    "caption": "This is a new post",
+    "image": "https://cloudinary.com/your_image_url",
+    "author": {
+      "username": "john_doe",
+      "profilePicture": "https://cloudinary.com/your_profile_picture_url"
+    },
+    "likes": [],
+    "comments": []
+  },
+  "success": true
+}
+
+
+{
+  "message": "Image required",
+  "success": false
+}
+
+curl -X POST http://localhost:8000/api/v1/posts/addpost \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -F "image=@/path/to/your/image.jpg" \
+  -F "caption=This is a new post"
+
+
+  {
+  "message": "New post added",
+  "post": {
+    "caption": "This is a new post",
+    "image": "https://cloudinary.com/your_image_url",
+    "author": {
+      "username": "john_doe",
+      "profilePicture": "https://cloudinary.com/your_profile_picture_url"
+    },
+    "likes": [],
+    "comments": []
+  },
   "success": true
 }
