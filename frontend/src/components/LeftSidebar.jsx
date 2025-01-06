@@ -49,8 +49,7 @@ const LeftSidebar = () => {
     }
 
     const sidebarItems = [
-        { icon: <Home />, text: "Home" },
-        { icon: <Heart />, text: "Notifications" },
+        { icon: <Home />, text: "Home" },   
         { icon: <PlusSquare />, text: "Create" },
         {
             icon: (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import useGetUserProfile from '@/hooks/useGetUserProfile';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -41,7 +41,8 @@ const Profile = () => {
                 {
                   isLoggedInUserProfile ? (
                     <>
-                      <Link to="/account/edit"><Button variant='secondary' className='hover:bg-gray-200 h-8'>Edit profile</Button></Link>
+                      <Link to="/account/edit"><Button variant='secondary' className='hover:bg-gray-200 h-8 '>Edit profile</Button></Link>
+                   
                     </>
                   ) : (
                     isFollowing ? (
@@ -62,8 +63,10 @@ const Profile = () => {
               </div>
               <div className='flex flex-col gap-1'>
                 <span className='font-semibold'>{userProfile?.bio || 'bio here...'}</span>
-                <Badge className='w-fit' variant='secondary'><AtSign /> <span className='pl-1'>{userProfile?.username}</span> </Badge>
-               
+                {/* <Badge className='w-fit' variant='secondary'><AtSign /> <span className='pl-1'>{userProfile?.username}</span> </Badge>
+                <span>🤯Learn code with patel mernstack style</span>
+                <span>🤯Turing code into fun</span>
+                <span>🤯DM for collaboration</span> */}
               </div>
             </div>
           </section>
@@ -73,6 +76,7 @@ const Profile = () => {
             <span className={`py-3 cursor-pointer ${activeTab === 'posts' ? 'font-bold' : ''}`} onClick={() => handleTabChange('posts')}>
               POSTS
             </span>
+          
           </div>
           <div className='grid grid-cols-3 gap-1'>
             {
