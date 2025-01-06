@@ -1,4 +1,6 @@
 import { User } from "../models/user.model.js";
+import sharp from "sharp";
+import cloudinary from "../utils/cloudinary.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Post } from "../models/post.model.js";
@@ -119,12 +121,21 @@ export const getProfile = async (req, res) => {
 export const editProfile = async (req, res) => {
     try {
         const userId = req.id;
+        console.log("🚀 ~ editProfile ~ req.id:", req.id)
         const { bio, gender } = req.body;
-        const profilePicture = req.file;
+        console.log("🚀 ~ editProfile ~ req.body:", req.body)
+        const image = req.file;
+        console.log("🚀 ~ editProfile ~  req.file:", req.file)
         let cloudResponse;
+        const optimizedImageBuffer = await sharp(image.buffer)
+            .resize({ width: 800, height: 800, fit: 'inside' })
+            .toFormat('jpeg', { quality: 80 })
+            .toBuffer();
 
-        if (profilePicture) {
-            const fileUri = getDataUri(profilePicture);
+        // buffer to data uri
+        const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
+        if (image) {
+            // const fileUri = getDataUri(profilePicture);
             cloudResponse = await cloudinary.uploader.upload(fileUri);
         }
 
@@ -137,7 +148,7 @@ export const editProfile = async (req, res) => {
         };
         if (bio) user.bio = bio;
         if (gender) user.gender = gender;
-        if (profilePicture) user.profilePicture = cloudResponse.secure_url;
+        if (image) user.profilePicture = cloudResponse.secure_url;
 
         await user.save();
 

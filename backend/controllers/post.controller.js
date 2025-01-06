@@ -9,6 +9,7 @@ export const addNewPost = async (req, res) => {
     try {
         const { caption } = req.body;
         const image = req.file;
+        console.log("🚀 ~ addNewPost ~ image:", image)
         const authorId = req.id;
 
         if (!image) return res.status(400).json({ message: 'Image required' });
@@ -22,6 +23,7 @@ export const addNewPost = async (req, res) => {
         // buffer to data uri
         const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
         const cloudResponse = await cloudinary.uploader.upload(fileUri);
+        console.log("🚀 ~ addNewPost ~ fileUri:", fileUri)
         const post = await Post.create({
             caption,
             image: cloudResponse.secure_url,
