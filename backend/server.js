@@ -21,11 +21,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const corsOptions = {
-    origin: "http://localhost:5173", 
+    origin: "https://insta-clone-frontend-kappa.vercel.app/", 
     credentials: true
   };
   
-app.use(cors());
+app.use(cors(corsOptions));
 
 // yha pr apni api ayengi
 app.use("/api/v1/user", userRoute);
