@@ -21,8 +21,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 const corsOptions = {
-    origin: "https://insta-clone-frontend-lc0cdw72v-mandavras-projects.vercel.app", 
-    credentials: true
+    origin: "https://insta-clone-frontend-lc0cdw72v-mandavras-projects.vercel.app",
+    credentials: true 
   };
   
 app.use(cors(corsOptions));
