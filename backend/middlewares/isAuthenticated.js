@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 const isAuthenticated = async (req, res, next) => {
     try {
-        console.log('Request headers:', req.headers.cookie);  // Shows raw cookies
+        console.log('Request headers:', req.headers);  // Shows raw cookies
         console.log('Parsed cookies:', req.cookies);          // Parsed cookies
         const token = req.cookies.token;
         console.log('Token:', token);                         // Should show token
