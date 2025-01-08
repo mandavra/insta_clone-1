@@ -40,7 +40,7 @@ Example:
   "success": false
 }
 
-curl -X POST https://insta-clone-1-fqbz.onrender.com//api/v1/user/register \
+curl -X POST http://localhost:8000/api/v1/user/register \
   -H "Content-Type: application/json" \
   -d '{
         "username": "john_doe",
@@ -74,7 +74,7 @@ The request body should be in `multipart/form-data` format and include the follo
 
 Example:
 ```sh
-curl -X POST https://insta-clone-1-fqbz.onrender.com//api/v1/posts/addpost \
+curl -X POST http://localhost:8000/api/v1/posts/addpost \
   -H "Authorization: Bearer <your_jwt_token>" \
   -F "image=@/path/to/your/image.jpg" \
   -F "caption=This is a new post"
@@ -101,7 +101,7 @@ curl -X POST https://insta-clone-1-fqbz.onrender.com//api/v1/posts/addpost \
   "success": false
 }
 
-curl -X POST https://insta-clone-1-fqbz.onrender.com//api/v1/posts/addpost \
+curl -X POST http://localhost:8000/api/v1/posts/addpost \
   -H "Authorization: Bearer <your_jwt_token>" \
   -F "image=@/path/to/your/image.jpg" \
   -F "caption=This is a new post"
