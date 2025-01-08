@@ -20,11 +20,17 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
+// const corsOptions = {
+//     origin: "https://insta-clone-frontend-hif5m79fk-mandavras-projects.vercel.app",
+//     credentials: true 
+//   };
+
+// app.use(cors(corsOptions));
 const corsOptions = {
-    origin: "https://insta-clone-frontend-hif5m79fk-mandavras-projects.vercel.app",
-    credentials: true 
-  };
-  
+    origin: ["https://insta-clone-frontend-hif5m79fk-mandavras-projects.vercel.app", "insta-clone-frontend-git-main-mandavras-projects.vercel.app"],
+    credentials: true
+};
+
 app.use(cors(corsOptions));
 
 // yha pr apni api ayengi
@@ -34,7 +40,7 @@ app.use("/api/v1/post", postRoute);
 
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
