@@ -125,6 +125,50 @@ export const getProfile = async (req, res) => {
     }
 };
 
+// export const editProfile = async (req, res) => {
+//     try {
+//         const userId = req.id;
+//         console.log("🚀 ~ editProfile ~ req.id:", req.id)
+//         const { bio, gender } = req.body;
+//         console.log("🚀 ~ editProfile ~ req.body:", req.body)
+//         const image = req.file;
+//         console.log("🚀 ~ editProfile ~  req.file:", req.file)
+//         let cloudResponse;
+//         const optimizedImageBuffer = await sharp(image.buffer)
+//             .resize({ width: 800, height: 800, fit: 'inside' })
+//             .toFormat('jpeg', { quality: 80 })
+//             .toBuffer();
+
+//         // buffer to data uri
+//         const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
+//         if (image) {
+//             // const fileUri = getDataUri(profilePicture);
+//             cloudResponse = await cloudinary.uploader.upload(fileUri);
+//         }
+
+//         const user = await User.findById(userId).select('-password');
+//         if (!user) {
+//             return res.status(404).json({
+//                 message: 'User not found.',
+//                 success: false
+//             });
+//         };
+//         if (bio) user.bio = bio;
+//         if (gender) user.gender = gender;
+//         if (image) user.profilePicture = cloudResponse.secure_url;
+
+//         await user.save();
+
+//         return res.status(200).json({
+//             message: 'Profile updated.',
+//             success: true,
+//             user
+//         });
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 export const editProfile = async (req, res) => {
     try {
         const userId = req.id;
@@ -134,15 +178,15 @@ export const editProfile = async (req, res) => {
         const image = req.file;
         console.log("🚀 ~ editProfile ~  req.file:", req.file)
         let cloudResponse;
-        const optimizedImageBuffer = await sharp(image.buffer)
-            .resize({ width: 800, height: 800, fit: 'inside' })
-            .toFormat('jpeg', { quality: 80 })
-            .toBuffer();
 
-        // buffer to data uri
-        const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
         if (image) {
-            // const fileUri = getDataUri(profilePicture);
+            const optimizedImageBuffer = await sharp(image.buffer)
+                .resize({ width: 800, height: 800, fit: 'inside' })
+                .toFormat('jpeg', { quality: 80 })
+                .toBuffer();
+
+            // buffer to data uri
+            const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
             cloudResponse = await cloudinary.uploader.upload(fileUri);
         }
 
@@ -167,6 +211,10 @@ export const editProfile = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: 'Internal server error.',
+            success: false
+        });
     }
 };
 
