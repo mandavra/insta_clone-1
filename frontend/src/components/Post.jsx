@@ -10,6 +10,7 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { setPosts, setSelectedPost } from '@/redux/postSlice'
 import { Badge } from './ui/badge'
+import { Link } from 'react-router-dom'
 
 const Post = ({ post }) => {
     const [text, setText] = useState("");
@@ -115,7 +116,8 @@ const Post = ({ post }) => {
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div className='flex items-center gap-3'>
-                        <h1>{post.author?.username}</h1>
+                        <h1></h1>
+                        <Link to={`/profile1/${post.author?._id}`}>{post.author?.username}</Link>
                        {user?._id === post.author._id &&  <Badge variant="secondary">Author</Badge>}
                     </div>
                 </div>

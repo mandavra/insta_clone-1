@@ -88,12 +88,12 @@ export const login = async (req, res) => {
         // return res.cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 1 * 24 * 60 * 60 * 1000 }).json({
         //     message: `Welcome back ${user.username}`,
         //     success: true,
-            
+
         //     user
         // });
-        return res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true,maxAge: 1 * 24 * 60 * 60 * 1000 }).json({
+        return res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true, maxAge: 1 * 24 * 60 * 60 * 1000 }).json({
             message: `Welcome back ${user.username}`,
-            success: true,
+            success: true, token: token,
 
             user
         });
@@ -115,6 +115,7 @@ export const logout = async (_, res) => {
 export const getProfile = async (req, res) => {
     try {
         const userId = req.params.id;
+        console.log("🚀 ~ getProfile ~ userId:", userId)
         let user = await User.findById(userId).populate({ path: 'posts', createdAt: -1 }).populate('bookmarks');
         return res.status(200).json({
             user,
@@ -221,7 +222,9 @@ export const editProfile = async (req, res) => {
 export const followOrUnfollow = async (req, res) => {
     try {
         const followKrneWala = req.id; // patel
+        console.log("🚀 ~ followOrUnfollow ~ followKrneWala:", followKrneWala)
         const jiskoFollowKrunga = req.params.id; // shivani
+        console.log("🚀 ~ followOrUnfollow ~ jiskoFollowKrunga:", jiskoFollowKrunga)
         if (followKrneWala === jiskoFollowKrunga) {
             return res.status(400).json({
                 message: 'You cannot follow/unfollow yourself',
@@ -230,7 +233,9 @@ export const followOrUnfollow = async (req, res) => {
         }
 
         const user = await User.findById(followKrneWala);
+        console.log("🚀 ~ followOrUnfollow ~ user:", user)
         const targetUser = await User.findById(jiskoFollowKrunga);
+        console.log("🚀 ~ followOrUnfollow ~ targetUser:", targetUser)
 
         if (!user || !targetUser) {
             return res.status(400).json({
@@ -240,6 +245,7 @@ export const followOrUnfollow = async (req, res) => {
         }
         // mai check krunga ki follow krna hai ya unfollow
         const isFollowing = user.following.includes(jiskoFollowKrunga);
+        console.log("🚀 ~ followOrUnfollow ~ isFollowing:", isFollowing)
         if (isFollowing) {
             // unfollow logic ayega
             await Promise.all([
@@ -259,3 +265,54 @@ export const followOrUnfollow = async (req, res) => {
         console.log(error);
     }
 }
+
+export const follow = async (req, res) => {
+    try {
+        const followUser = await User.findByIdAndUpdate(req.params.id, {
+            $push: { followers: req.id }
+        }, {
+            new: true
+        })
+        if (!followUser) {
+            return res.status(422).json({ error: "User to follow not found" })
+        }
+        const UpdateUser = await User.findByIdAndUpdate(
+            req.id,
+            { $push: { following: req.params.id } },
+            { new: true }
+        );
+        console.log("🚀 ~ router.post ~ followUser:", followUser)
+        if (!UpdateUser) {
+            return res.status(404).json({ error: "Current user not found" });
+        } else {
+            res.json({ message: "Followed successfully", UpdateUser });
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const unfollow = async (req,res)=>{
+    try{
+        const followUser = await User.findByIdAndUpdate(req.params.id,{
+        $pull:{followers:req.id}
+      },{
+        new:true
+      })
+      if(!followUser){
+        return res.status(422).json({error:"User to follow not found"})
+      }
+      const UpdateUser = await User.findByIdAndUpdate(
+        req.id, 
+        { $pull: { following: req.params.id } },
+        { new: true }
+      );
+      if (!UpdateUser) {
+        return res.status(404).json({ error: "Current user not found" });
+      } else{
+        res.json({ message: "UnFollowed successfully", UpdateUser });
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }

@@ -78,7 +78,7 @@ const CommentDialog = ({ open, setOpen }) => {
                   </Avatar>
                 </Link>
                 <div>
-                  <Link className='font-semibold text-xs'>{selectedPost?.author?.username}</Link>
+                  <Link  to={`/profile1/${selectedPost?.author?._id}`} className='font-semibold text-xs'>{selectedPost?.author?.username}</Link>
                   {/* <span className='text-gray-600 text-sm'>Bio here...</span> */}
                 </div>
               </div>

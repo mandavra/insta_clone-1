@@ -36,6 +36,7 @@ const Login = () => {
                 dispatch(setAuthUser(res.data.user));
                 navigate("/");
                 toast.success(res.data.message);
+                localStorage.setItem('token', res.data.token);
                 setInput({
                     email: "",
                     password: ""
