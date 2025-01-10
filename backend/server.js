@@ -27,7 +27,7 @@ app.use(urlencoded({ extended: true }));
 
 // app.use(cors(corsOptions));
 const corsOptions = {
-    origin: ["https://insta-clone-frontend-git-main-mandavras-projects.vercel.app", "https://insta-clone-frontend-2jvs8sacr-mandavras-projects.vercel.app", "http://localhost:5173"," http://localhost:5175","https://insta-clone-frontend-7063noceq-mandavras-projects.vercel.app"],
+    origin: ["insta-clone-frontend-pi.vercel.app", "insta-clone-frontend-9cd0eaof7-mandavras-projects.vercel.app", "http://localhost:5173"," http://localhost:5175"],
     credentials: true
 };
 
