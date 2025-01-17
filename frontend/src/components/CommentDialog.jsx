@@ -34,11 +34,13 @@ const CommentDialog = ({ open, setOpen }) => {
   const sendMessageHandler = async () => {
 
     try {
+      const token = localStorage.getItem('token');
       const res = await axios.post(`https://insta-clone-1-fqbz.onrender.com/api/v1/post/${selectedPost?._id}/comment`, { text }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+          },
+          withCredentials: true
       });
 
       if (res.data.success) {

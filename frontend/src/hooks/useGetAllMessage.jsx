@@ -10,7 +10,13 @@ const useGetAllMessage = () => {
     useEffect(() => {
         const fetchAllMessage = async () => {
             try {
-                const res = await axios.get(`https://insta-clone-1-fqbz.onrender.com/api/v1/message/all/${selectedUser?._id}`, { withCredentials: true });
+                const token = localStorage.getItem('token');
+                const res = await axios.get(`https://insta-clone-1-fqbz.onrender.com/api/v1/message/all/${selectedUser?._id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                });
                 if (res.data.success) {  
                     dispatch(setMessages(res.data.messages));
                 }

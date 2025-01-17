@@ -17,9 +17,11 @@ const ChatPage = () => {
 
     const sendMessageHandler = async (receiverId) => {
         try {
+            const token = localStorage.getItem('token');
             const res = await axios.post(`https://insta-clone-1-fqbz.onrender.com/api/v1/message/send/${receiverId}`, { textMessage }, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             });

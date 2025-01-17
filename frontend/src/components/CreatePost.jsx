@@ -16,8 +16,8 @@ const CreatePost = ({ open, setOpen }) => {
   const [caption, setCaption] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
-  const {user} = useSelector(store=>store.auth);
-  const {posts} = useSelector(store=>store.post);
+  const { user } = useSelector(store => store.auth);
+  const { posts } = useSelector(store => store.post);
   const dispatch = useDispatch();
 
   const fileChangeHandler = async (e) => {
@@ -35,9 +35,11 @@ const CreatePost = ({ open, setOpen }) => {
     if (imagePreview) formData.append("image", file);
     try {
       setLoading(true);
+      const token = localStorage.getItem('token');
       const res = await axios.post('https://insta-clone-1-fqbz.onrender.com/api/v1/post/addpost', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
         },
         withCredentials: true
       });

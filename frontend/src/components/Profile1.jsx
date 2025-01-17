@@ -30,12 +30,11 @@ const Profile = () => {
     const FollowUsers = async (id) => {
       try {
         const token = localStorage.getItem('token');
-        console.log("🚀 ~ FollowUsers ~ token:", token)
         const res = await axios.post(`https://insta-clone-1-fqbz.onrender.com/api/v1/user/follow/${id}`, {}, {
-          withCredentials: true,
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            withCredentials: true,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
         if (res.data) {
           setIsFollow(true);

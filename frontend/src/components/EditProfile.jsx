@@ -42,11 +42,13 @@ const EditProfile = () => {
         }
         try {
             setLoading(true);
-            const res = await axios.post('https://insta-clone-1-fqbz.onrender.com/api/v1/user/profile/edit', formData,{
-                headers:{
-                    'Content-Type':'multipart/form-data'
+            const token = localStorage.getItem('token');
+            const res = await axios.post('https://insta-clone-1-fqbz.onrender.com/api/v1/user/profile/edit', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`
                 },
-                withCredentials:true
+                withCredentials: true
             });
             if(res.data.success){
                 const updatedUserData = {

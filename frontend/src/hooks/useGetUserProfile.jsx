@@ -10,7 +10,13 @@ const useGetUserProfile = (userId) => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                const res = await axios.get(`https://insta-clone-1-fqbz.onrender.com/api/v1/user/${userId}/profile`, { withCredentials: true });
+                const token = localStorage.getItem('token');
+                const res = await axios.get(`https://insta-clone-1-fqbz.onrender.com/api/v1/user/${userId}/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                });
                 if (res.data.success) { 
                     dispatch(setUserProfile(res.data.user));
                 }

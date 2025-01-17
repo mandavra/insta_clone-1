@@ -9,9 +9,14 @@ const useGetAllPost = () => {
     useEffect(() => {
         const fetchAllPost = async () => {
             try {
-                const res = await axios.get('https://insta-clone-1-fqbz.onrender.com/api/v1/post/all', { withCredentials: true });
-                if (res.data.success) { 
-                    console.log(res.data.posts);
+                const token = localStorage.getItem('token');
+                const res = await axios.get('https://insta-clone-1-fqbz.onrender.com/api/v1/post/all', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                });
+                if (res.data.success) {
                     dispatch(setPosts(res.data.posts));
                 }
             } catch (error) {
